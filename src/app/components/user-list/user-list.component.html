@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="list-wrapper">
+    <!-- Header -->
+    <div class="list-header">
+      <div class="header-content">
+        <h1>📋 Usuarios Registrados</h1>
+        <p>Gestiona y visualiza todos los usuarios de la Biblioteca Inteligente</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-refresh" (click)="refreshUsers()" [disabled]="loading" title="Actualizar lista">
+          🔄 Actualizar
+        </button>
+        <button class="btn btn-export" (click)="exportToCSV()" [disabled]="filteredUsers.length === 0" title="Descargar CSV">
+          📥 Exportar
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      ✅ {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-error">
+      ❌ {{ errorMessage }}
+    </div>
+
+    <!-- Buscador -->
+    <div class="search-section">
+      <div class="search-box">
+        <input 
+          type="text" 
+          class="search-input" 
+          [(ngModel)]="searchTerm"
+          (keyup)="searchUsers()"
+          placeholder="🔍 Buscar por nombre, apellido, correo o celular..."
+          [disabled]="loading"
+        />
+        <button 
+          class="btn btn-clear" 
+          (click)="clearSearch()"
+          *ngIf="searchTerm"
+          title="Limpiar búsqueda"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="search-info">
+        <span class="badge">{{ totalRecords }} usuario<span *ngIf="totalRecords !== 1">s</span></span>
+        <span *ngIf="searchTerm" class="badge badge-search">Búsqueda activa</span>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <!-- Tabla de Usuarios -->
+    <div *ngIf="!loading && paginatedUsers.length > 0" class="table-container">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre Completo</th>
+            <th>Correo Electrónico</th>
+            <th>Celular</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of paginatedUsers; let i = index" class="user-row">
+            <td class="cell-id">{{ (currentPage * itemsPerPage) + i + 1 }}</td>
+            <td class="cell-name">
+              <div class="user-name">
+                <span class="avatar">{{ (user.nombre?.charAt(0) || '?').toUpperCase() }}</span>
+                <div class="name-info">
+                  <strong>{{ user.nombre }} {{ user.apellido }}</strong>
+                </div>
+              </div>
+            </td>
+            <td class="cell-email">
+              <a href="mailto:{{ user.correoElectronico }}" class="email-link">
+                {{ user.correoElectronico }}
+              </a>
+            </td>
+            <td class="cell-phone">{{ user.numeroCelular }}</td>
+            <td class="cell-date">{{ formatDate(user.fechaNacimiento) }}</td>
+            <td class="cell-actions">
+              <button 
+                class="btn btn-sm btn-delete" 
+                (click)="deleteUser(user.id!)"
+                title="Eliminar usuario"
+              >
+                🗑️ Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mensaje vacío -->
+    <div *ngIf="!loading && paginatedUsers.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>No hay usuarios</h3>
+      <p *ngIf="searchTerm">No se encontraron usuarios que coincidan con tu búsqueda.</p>
+      <p *ngIf="!searchTerm">Aún no hay usuarios registrados. ¡Comienza registrando uno!</p>
+      <button class="btn btn-primary" [routerLink]="['/register']">
+        ➕ Registrar Usuario
+      </button>
+    </div>
+
+    <!-- Paginación -->
+    <div *ngIf="!loading && totalRecords > itemsPerPage" class="pagination-container">
+      <p-paginator 
+        [rows]="itemsPerPage"
+        [totalRecords]="totalRecords"
+        [pageLinkSize]="5"
+        (onPageChange)="onPageChange($event)"
+        [showPageLinks]="true"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} usuarios"
+      ></p-paginator>
+    </div>
+
+    <!-- Footer -->
+    <div class="list-footer">
+      <p>Última actualización: <strong>{{ 'now' | date: 'dd/MM/yyyy HH:mm:ss' }}</strong></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h1>Registro - Biblioteca Inteligente</h1>
+      <p>Completa los siguientes campos para crear tu cuenta</p>
+    </div>
+
+    <!-- Mensajes de éxito o error -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Formulario -->
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre *</label>
+        <input
+          pInputText
+          type="text"
+          id="nombre"
+          formControlName="nombre"
+          placeholder="Ej: Juan"
+          class="w-full"
+          [class.is-invalid]="submitted && f['nombre'].errors"
+        >
+        <div *ngIf="submitted && f['nombre'].errors" class="invalid-feedback">
+          <small *ngIf="f['nombre'].errors['required']">El nombre es requerido</small>
+          <small *ngIf="f['nombre'].errors['minlength']">El nombre debe tener al menos 2 caracteres</small>
+        </div>
+      </div>
+
+      <!-- Apellido -->
+      <div class="form-group">
+        <label for="apellido">Apellido *</label>
+        <input
+          pInputText
+          type="text"
+          id="apellido"
+          formControlName="apellido"
+          placeholder="Ej: Pérez"
+          class="w-full"
+          [class.is-invalid]="submitted && f['apellido'].errors"
+        >
+        <div *ngIf="submitted && f['apellido'].errors" class="invalid-feedback">
+          <small *ngIf="f['apellido'].errors['required']">El apellido es requerido</small>
+          <small *ngIf="f['apellido'].errors['minlength']">El apellido debe tener al menos 2 caracteres</small>
+        </div>
+      </div>
+
+      <!-- Correo Electrónico -->
+      <div class="form-group">
+        <label for="correoElectronico">Correo Electrónico *</label>
+        <input
+          pInputText
+          type="email"
+          id="correoElectronico"
+          formControlName="correoElectronico"
+          placeholder="Ej: usuario@ejemplo.com"
+          class="w-full"
+          [class.is-invalid]="submitted && f['correoElectronico'].errors"
+        >
+        <div *ngIf="submitted && f['correoElectronico'].errors" class="invalid-feedback">
+          <small *ngIf="f['correoElectronico'].errors['required']">El correo es requerido</small>
+          <small *ngIf="f['correoElectronico'].errors['email']">El correo debe ser válido</small>
+        </div>
+      </div>
+
+      <!-- Número Celular -->
+      <div class="form-group">
+        <label for="numeroCelular">Número Celular *</label>
+        <input
+          pInputText
+          type="tel"
+          id="numeroCelular"
+          formControlName="numeroCelular"
+          placeholder="Ej: 3215551234"
+          class="w-full"
+          [class.is-invalid]="submitted && f['numeroCelular'].errors"
+        >
+        <div *ngIf="submitted && f['numeroCelular'].errors" class="invalid-feedback">
+          <small *ngIf="f['numeroCelular'].errors['required']">El número celular es requerido</small>
+          <small *ngIf="f['numeroCelular'].errors['pattern']">El número debe contener entre 7 y 15 dígitos</small>
+        </div>
+      </div>
+
+      <!-- Fecha de Nacimiento -->
+      <div class="form-group">
+        <label for="fechaNacimiento">Fecha de Nacimiento *</label>
+        <p-calendar
+          id="fechaNacimiento"
+          formControlName="fechaNacimiento"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          placeholder="Selecciona tu fecha de nacimiento"
+          [class.is-invalid]="submitted && f['fechaNacimiento'].errors"
+          panelStyleClass="custom-calendar-panel"
+        ></p-calendar>
+        <div *ngIf="submitted && f['fechaNacimiento'].errors" class="invalid-feedback">
+          <small *ngIf="f['fechaNacimiento'].errors['required']">La fecha de nacimiento es requerida</small>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          pButton
+          label="Registrarse"
+          [loading]="loading"
+          [disabled]="loading"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+        <button
+          type="button"
+          pButton
+          label="Limpiar"
+          (click)="reset()"
+          [disabled]="loading"
+          icon="pi pi-times"
+          class="p-button-outlined w-full"
+        ></button>
+        <!--<button
+          type="button"
+          pButton
+          label="Imprimir"
+          (click)="printForm()"
+          icon="pi pi-print"
+          class="p-button-success w-full"
+        ></button>-->
+      </div>
+    </form>
+
+    <p class="form-footer">* Campos requeridos</p>
+  </div>
+</div>

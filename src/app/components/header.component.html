@@ -1,0 +1,28 @@
+<header class="app-header">
+  <div class="header-container">
+    <!-- Logo/Escudo Lado Izquierdo -->
+    <div class="logo-section">
+      <img 
+        [src]="logoUrl" 
+        alt="Logo Escudo"
+        class="logo-image"
+      >
+    </div>
+
+    <!-- Contenido del Header -->
+    <div class="header-content">
+      <h1 class="app-title">{{ appTitle }}</h1>
+      <p class="app-subtitle">{{ appSubtitle }}</p>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="header-nav">
+      <a routerLink="/register" routerLinkActive="active" class="nav-link">
+        ➕ Registrar
+      </a>
+      <a routerLink="/users" routerLinkActive="active" class="nav-link">
+        📋 Usuarios
+      </a>
+    </nav>
+  </div>
+</header>
