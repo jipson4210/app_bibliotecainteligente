@@ -74,7 +74,7 @@
             <td class="cell-id">{{ (currentPage * itemsPerPage) + i + 1 }}</td>
             <td class="cell-name">
               <div class="user-name">
-                <span class="avatar">{{ (user.nombre?.charAt(0) || '?').toUpperCase() }}</span>
+                <span class="avatar">{{ (user.nombre.charAt(0) || '?').toUpperCase() }}</span>
                 <div class="name-info">
                   <strong>{{ user.nombre }} {{ user.apellido }}</strong>
                 </div>
