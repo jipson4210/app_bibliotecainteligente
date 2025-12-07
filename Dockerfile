@@ -25,7 +25,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/app_bibiotecainteligente /usr/share/nginx/html
 
 # Exponer puerto
-EXPOSE 4200
+EXPOSE 8080
 
 # Comando para iniciar nginx
 CMD ["nginx", "-g", "daemon off;"]
