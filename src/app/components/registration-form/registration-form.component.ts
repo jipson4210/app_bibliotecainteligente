@@ -20,6 +20,7 @@ export class RegistrationFormComponent {
   loading = false;
   successMessage = '';
   errorMessage = '';
+  showPassword = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,12 +35,17 @@ export class RegistrationFormComponent {
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       correoElectronico: ['', [Validators.required, Validators.email]],
       numeroCelular: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
-      fechaNacimiento: ['', Validators.required]
+      fechaNacimiento: ['', Validators.required],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   get f() {
     return this.registrationForm.controls;
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {

@@ -1,0 +1,75 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Biblioteca Inteligente</h1>
+      <p>Inicia sesión en tu cuenta</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="alert alert-error">
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Campo Email -->
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="correo@ejemplo.com"
+          [class.is-invalid]="submitted && !email"
+          required
+        />
+        <small *ngIf="submitted && !email" class="error-text">
+          El correo electrónico es requerido
+        </small>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="password-input-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+            [class.is-invalid]="submitted && !password"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+          >
+            <span *ngIf="!showPassword" class="icon">👁️</span>
+            <span *ngIf="showPassword" class="icon">👁️‍🗨️</span>
+          </button>
+        </div>
+        <small *ngIf="submitted && !password" class="error-text">
+          La contraseña es requerida
+        </small>
+      </div>
+
+      <!-- Botón Submit -->
+      <button
+        type="submit"
+        class="btn-login"
+        [disabled]="loading"
+      >
+        <span *ngIf="!loading">Iniciar Sesión</span>
+        <span *ngIf="loading" class="spinner"></span>
+      </button>
+    </form>
+
+    <!-- Link a Registro -->
+    <div class="login-footer">
+      <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
+    </div>
+  </div>
+</div>

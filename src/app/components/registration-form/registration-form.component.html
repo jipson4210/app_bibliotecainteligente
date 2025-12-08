@@ -105,6 +105,35 @@
         </div>
       </div>
 
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="contrasena">Contraseña *</label>
+        <div class="password-input-wrapper">
+          <input
+            pInputText
+            [type]="showPassword ? 'text' : 'password'"
+            id="contrasena"
+            formControlName="contrasena"
+            placeholder="Mínimo 6 caracteres"
+            class="w-full"
+            [class.is-invalid]="submitted && f['contrasena'].errors"
+          >
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+          >
+            <span *ngIf="!showPassword">👁️</span>
+            <span *ngIf="showPassword">👁️‍🗨️</span>
+          </button>
+        </div>
+        <div *ngIf="submitted && f['contrasena'].errors" class="invalid-feedback">
+          <small *ngIf="f['contrasena'].errors['required']">La contraseña es requerida</small>
+          <small *ngIf="f['contrasena'].errors['minlength']">La contraseña debe tener al menos 6 caracteres</small>
+        </div>
+      </div>
+
       <!-- Botones -->
       <div class="form-actions">
         <button
@@ -125,17 +154,12 @@
           icon="pi pi-times"
           class="p-button-outlined w-full"
         ></button>
-        <!--<button
-          type="button"
-          pButton
-          label="Imprimir"
-          (click)="printForm()"
-          icon="pi pi-print"
-          class="p-button-success w-full"
-        ></button>-->
       </div>
     </form>
 
-    <p class="form-footer">* Campos requeridos</p>
+    <div class="form-footer-links">
+      <p class="form-footer">* Campos requeridos</p>
+      <p><a href="/login">¿Ya tienes cuenta? Inicia sesión aquí</a></p>
+    </div>
   </div>
 </div>

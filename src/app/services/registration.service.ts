@@ -12,6 +12,15 @@ export class RegistrationService {
 
   constructor(private http: HttpClient) { }
 
+  loginUser(email: string, password: string): Promise<any> {
+    return firstValueFrom(
+      this.http.post(`${this.apiUrl}/login`, {
+        correoElectronico: email,
+        contrasena: password
+      })
+    );
+  }
+
   registerUser(user: User): Promise<any> {
     return firstValueFrom(
       this.http.post(`${this.apiUrl}/register`, user)
@@ -24,11 +33,9 @@ export class RegistrationService {
 
   getUsers(): Promise<any> {
     return this.getAllUsers().then(response => {
-      // Si la respuesta tiene la estructura { total, users }, retorna solo el array
       if (response && response.users && Array.isArray(response.users)) {
         return response.users;
       }
-      // Si ya es un array, retornarlo directamente
       return response;
     });
   }
@@ -55,4 +62,5 @@ export class RegistrationService {
     return firstValueFrom(this.http.get(url));
   }
 }
+
 

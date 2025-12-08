@@ -5,4 +5,5 @@ export interface User {
   correoElectronico: string;
   numeroCelular: string;
   fechaNacimiento: string;
+  contrasena?: string;
 }

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/37a99064-39b0-47d1-9a72-9cdfb465aafc/resourceGroups/recurso-angular/providers/Microsoft.Web/sites/bookutm",
+    "appService.deploySubpath": "dist"
+}
