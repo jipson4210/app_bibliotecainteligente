@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { Observable, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationService {
   
-  private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
